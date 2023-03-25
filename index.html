@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Minecraft</title>
+		<style>:root{
+			--day: lightblue;
+			--night: #ccc;
+			--color1: url('sprites/land/land-top.png');
+			--color2: url('sprites/brick/brick-bottom.png');
+			--color3: url('sprites/wood/wood-top.png');
+			--color4: url('sprites/sand/sand.jpg');
+			--color5: url('sprites/land/land.png');
+			--color6: url('sprites/rock/rock.png');
+			--color7: url('sprites/glass/glass.png');
+			--color8: url('sprites/brick/red-brick.png');
+			--color9: url('sprites/bomb/bomb.png');
+		
+			--darkground: linear-gradient(rgb(9, 32, 4), rgb(20, 56, 12));
+			--ground: linear-gradient(rgb(28, 97, 11), rgb(20, 56, 12));
+			--moon: linear-gradient(to right, rgb(33, 33, 33), #fff);
+			--sun: #fff;
+		}
+		
+		@font-face{
+			font-family: ArcadeClassic;
+			src: url('arcadeClassic/arcade.TTF');
+		}
+		
+		body{
+			background: var(--day);
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		
+		.cloud{
+			position: absolute;
+			top: -300px;
+			left: 0px;
+			transform: translateZ(0px);
+		}
+		
+		.front-cloud{
+			width: 100px;
+			height: 10px;
+			position: absolute;
+			background: #fff;
+		}
+		.back-cloud{
+			width: 100px;
+			height: 10px;
+			background: #fff;
+			position: absolute;
+			transform: translateZ(-100px);
+		}
+		.left-cloud{
+			width: 100px;
+			height: 10px;
+			background: #fff;
+			position: absolute;
+			left: -100px;
+			transform: rotateY(-90deg);
+			transform-origin: right;
+		}
+		.right-cloud{
+			width: 100px;
+			height: 10px;
+			background: #fff;
+			position: absolute;
+			left: 100px;
+			transform: rotateY(90deg);
+			transform-origin: left;
+		}
+		.top-cloud{
+			width: 100px;
+			height: 100px;
+			background: grey;
+			position: absolute;
+			top: -100px;
+			transform: rotateX(90deg);
+			transform-origin: bottom;
+		}
+		.bottom-cloud{
+			width: 100px;
+			height: 100px;
+			background: grey;
+			position: absolute;
+			top: 10px;
+			transform: rotateX(-90deg);
+			transform-origin: top;
+		}
+		
+		
+		.front-overlay{
+			width: 100%;
+			height: 100vh;
+			background: black;
+			position: absolute;
+			top: 0;
+			opacity: .9;
+		}
+		
+			.front-page-container{
+				width: 100%;
+				height: 100vh;
+				/*background: red;*/
+				position: absolute;
+				top: 0;
+				display: flex;
+				justify-content: center;
+				/*align-items: center;*/
+			}
+				.front-page{
+					font-family: ArcadeClassic;
+				}
+					.front-page .name{
+						color: #fff;
+						font-size: 5em;
+						position: relative;
+						text-shadow: 1px 1px 0 rgb(65, 65, 65),
+									 1px 2px 0 rgb(65, 65, 65),
+									 1px 3px 0 rgb(65, 65, 65),
+									 1px 4px 0 rgb(65, 65, 65),
+									 1px 5px 0 rgb(65, 65, 65),
+									 1px 6px 0 rgb(65, 65, 65),
+									 1px 7px 0 rgb(65, 65, 65),
+									 1px 8px 0 rgb(65, 65, 65),
+									 1px 9px 0 rgb(65, 65, 65),
+									 1px 12px 0 #000;
+						animation: float 1s infinite 0s;
+					}
+					@keyframes float{
+							0%{top: 0px}
+							50%{top: -20px}
+							100%{top: 0px}
+					}
+		
+					.front-page .version-cont{
+						position: relative;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						animation: float 1s infinite 0s;
+					}
+					@keyframes float{
+							0%{top: 0px}
+							50%{top: -20px}
+							100%{top: 0px}
+					}
+						.front-page .version{
+							position: relative;
+							top: -120px;
+							color: #fff;
+							font-size: 2em;
+							text-shadow: 1px 1px 0 rgb(65, 65, 65),
+										 1px 2px 0 rgb(65, 65, 65),
+										 1px 3px 0 rgb(65, 65, 65),
+										 1px 4px 0 rgb(65, 65, 65),
+										 1px 5px 0 rgb(65, 65, 65),
+										 1px 6px 0 rgb(65, 65, 65),
+										 1px 10px 0 #000;
+						}
+						.btn-cont{
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							cursor: pointer;
+		
+						}
+						.start-btn{
+							width: 300px;
+							height: 50px;
+							background: grey;
+							font-size: 2em;
+							/*text-align: center;*/
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							position: relative;
+							top: -50px;
+							color: #fff;
+							text-shadow: 2px 2px 0 #0c0c0c;
+							/*border: 4px outset black;*/
+							border-left: 2px solid #fff;
+							border-right: 2px solid #000;
+							border-top: 2px solid #fff;
+							border-bottom: 2px solid #000;
+						}
+						.start-btn:hover{
+							background: #0c0c0c;
+							border-left: 2px solid grey;
+							border-right: 2px solid #000;
+							border-top: 2px solid grey;
+							border-bottom: 2px solid #000;
+						}
+						
+							
+		
+		.sun{
+			width: 50px;
+			height: 50px;
+			background: var(--sun);
+			/*border-radius: 100%;*/
+			position: absolute;
+			top: 40px;
+			left: 300px;
+			box-shadow: 0 0 10px #fff,
+					0 0 20px #fff,
+					0 0 30px #fff;
+		
+		}
+		
+		.instructions{
+			color: #fff;
+		}
+		.instructions h4{
+			font-size: 1.4em;
+		}
+		.instructions span{
+			font-size: 1.3em;
+		}
+		
+		div{
+			transform-style: preserve-3d;
+		}
+		
+		.canvas{
+			/*border: 4px solid red;*/
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transform: rotateX(-28deg);
+			perspective: 900px;
+			/*transform-origin: top;*/
+		/*	animation: rotate 10s infinite 0s;
+		}
+		@keyframes rotate{
+			0%{
+				transform: rotateX(13deg) rotateY(0deg);
+			}
+			50%{
+				transform: rotateX(-13deg) rotateY(360deg);
+			}
+			100%{
+				transform: rotateX(13deg) rotateY(0deg);
+			}*/
+		}
+		
+		
+		
+		
+		
+		.canvas3{
+			transform: translateZ(0px);
+		}	
+		.canvas4{
+			position: absolute;
+			left: 0px;
+		}
+		
+		.container{
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+		
+		/*
+		.container div:hover{
+			border: 1px solid yellow;
+		}*/
+		
+		
+		.front{
+			/*background: red;*/
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			background: linear-gradient(darkgreen, green);
+		}
+		
+		.back{
+			/*background: blue;*/
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			background: linear-gradient(darkgreen, green);
+			transform: translateZ(-50px);
+		}
+		
+		.left{
+			/*background: green;*/
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			background: linear-gradient(darkgreen, green);
+			left: -50px;
+			transform: rotateY(-90deg);
+			transform-origin: right;
+		}
+		
+		.right{
+			/*background: yellow;*/
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			background: linear-gradient(darkgreen, green);
+			left: 50px;
+			transform: rotateY(90deg);
+			transform-origin: left;
+		}
+		
+		.top{
+			/*background: orange;*/
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			background: linear-gradient(darkgreen, green);
+			top: -50px;
+			transform: rotateX(90deg);
+			transform-origin: bottom;
+		}
+		
+		.bottom{
+			/*background: pink;*/
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			background: linear-gradient(darkgreen, green);
+			top: 50px;
+			transform: rotateX(-90deg);
+			transform-origin: top;
+		}
+		
+		
+		.ground{
+			width: 1800px;
+			height: 1100px;
+			background: var(--ground);
+			transform: rotateX(90deg) translateZ(400px);
+			position: absolute;
+			top: 0px;
+			left: -1000px;
+		}
+		
+		/*	.ground-hill{
+				width: 1800px;
+				height: 1100px;
+				background: var(--ground);
+				border-top: 1px solid #0c0c0c;
+				position: absolute;
+				top: 150px;
+				left: -1000px;
+				transform: translateZ(550px);
+			}
+		*/
+		
+			
+		
+			.cell{
+				width: 50px;
+				height: 50px;
+				/*border: 1px solid #000;*/
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+			.cell:hover{
+				/*border: 1px solid yellow;*/
+				background: #fff;
+				opacity: .3;
+			}
+		
+		.overlay{
+			width: 100%;
+			height: 100vh;
+			background: #000;
+			opacity: .7;
+			position: absolute;
+			top: 0;
+			display: none;
+		}
+			.texture-cont{
+				width: 100%;
+				height: 100vh;
+				/*background: #fff;*/
+				position: absolute;
+				top: 0;
+				display: none;
+				justify-content: center;
+				align-items: center;
+			}
+				.textures{
+					width: 350px;
+					height: 140px;
+					background: #fff;
+				}
+					.text-cont{
+						width: 100%;
+						height: 100%;
+						/*background: red;*/
+						border: 5px solid #fff;
+						position: absolute;
+						top: 0;	
+					}
+					.text-cont div{
+						width: 70px;
+						height: 70px;
+						position: absolute;
+						/*top: 0px;*/
+					}
+					.text-cont div:hover{
+						border: 2px solid #fff;
+					}
+						.text1{	
+							background: var(--color1) no-repeat center center/cover;
+						}
+						.text2{
+							background:  var(--color2) no-repeat center center/cover;
+							left: 70px; 
+						}
+						.text3{
+							background:  var(--color3) no-repeat center center/cover;
+							left: 140px;
+						}
+						.text4{
+							background:  var(--color4) no-repeat center center/cover;
+							left: 210px;
+						}
+						.text5{
+							background:  var(--color5) no-repeat center center/cover;
+							left: 280px;
+						}
+						.text6{
+							background:  var(--color6) no-repeat center center/cover;
+							left: 0px;
+							top: 70px
+						}
+						.text7{
+							background:  var(--color7) no-repeat center center/cover;
+							left: 70px;
+							top: 70px;
+						}
+						.text8{
+							background:  var(--color8) no-repeat center center/cover;
+							left: 140px;
+							top: 70px;
+						}
+						.text9{
+							background:  var(--color9) no-repeat center center/cover;
+							left: 210px;
+							top: 70px;
+						}
+						.text10{
+							background: url('sprites/nani.png') no-repeat center center/cover;
+							left: 280px;
+							top: 70px;
+						}
+						
+		
+		.cursor{
+			width: 50px;
+			height: 50px;
+			background: url('sprites/land/land-top.png') no-repeat center center/cover;
+			position: absolute;
+			transform: translateZ(3px);
+		}
+		
+		.item-cont{
+			width: 100%;
+			height: 100vh;
+			display: none;
+			justify-content: flex-start;
+			align-items: center;
+			position: absolute;
+			top: 0;
+			left: 1em;
+		}
+		
+		.items{
+			width: 60px;
+			height: 210px;
+			background: #fff;
+		}
+			.items div{
+				width: 55;
+				height: 55px;
+				/*margin-top: 5px;*/
+				border: 3px solid #fff;
+			}
+			.items div:hover{
+				border: 3px solid green; 
+		
+			}
+			.item1{
+				background: url('sprites/items/axe.png') no-repeat center center/cover;
+			}
+			.item2{
+				background: url('sprites/items/sword.png') no-repeat center center/cover;
+				/*background-color: grey;*/
+			}
+			.item3{
+				/*background: url('sprites/axe.png') no-repeat center center/cover;*/
+				background-color: grey;
+			}
+			.item4{
+				/*background: url('sprites/axe.png') no-repeat center center/cover;*/
+				background-color: grey;
+			}</style>
+	</head>
+	<body>
+		
+
+
+	<div class="sun"></div>
+
+	<div class="cloud">
+				 <div class="front-cloud"></div>
+				 <div class="back-cloud"></div>
+				 <div class="left-cloud"></div>
+				 <div class="right-cloud"></div>
+				 <div class="top-cloud"></div>
+				 <div class="bottom-cloud"></div>
+	</div>	
+
+	<div class="canvas">
+		<div class="canvas2">
+			<div class="canvas3">
+				<div class="canvas4">
+	
+					<!-- <div class="cloud">
+						<div class="front-cloud"></div>
+						<div class="back-cloud"></div>
+						<div class="left-cloud"></div>
+						<div class="right-cloud"></div>
+						<div class="top-cloud"></div>
+						<div class="bottom-cloud"></div>
+					</div> -->
+					<!-- <div class="container">
+						<div class="front"></div>
+						<div class="back"></div>
+						<div class="left"></div>
+						<div class="right"></div>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</div> -->
+					<!-- <div class="ground ground2">
+						<div class="cell"></div>
+					</div> -->
+					<!-- <div class="ground ground3">
+						
+					</div> -->
+					<div class="ground">
+						<!-- <div class="cell"></div> -->
+					</div>
+	<!-- 				<div class="ground-hill"></div>
+					<div class="ground-left"></div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+
+
+
+	<div class="overlay"></div>
+	<div class="texture-cont">
+	<div class="textures">
+		<div class="text-cont">
+			<div class="text1" onclick = "changeClolor1()"></div>
+			<div class="text2" onclick = "changeClolor2()"></div>
+			<div class="text3" onclick = "changeClolor3()"></div>
+			<div class="text4" onclick = "changeClolor4()"></div>
+			<div class="text5" onclick = "changeClolor5()"></div>
+			<div class="text6" onclick = "changeClolor6()"></div>
+			<div class="text7" onclick = "changeClolor7()"></div>
+			<div class="text8" onclick = "changeClolor8()"></div>
+			<div class="text9" onclick = "changeClolor9()"></div>
+			<div class="text10"></div>
+		</div>
+	</div>
+</div>
+
+<div class="item-cont">
+				<div class="items">
+								<div class="item1" onclick="destroying()"></div>
+								<div class="item2" onclick = "cutting()"></div>
+								<div class="item3"></div>
+								<div class="item4"></div>
+			</div>
+</div>
+
+
+
+<div class="cursor"></div>
+
+<div class="front-overlay"></div>
+<div class="front-page-container">
+				<div class="front-page">
+								<p class="name"><b>Minecraft</b></p>
+								<div class="version-cont">
+												<p class="version">HTML EDITION</p>
+												<div class="btn-cont">
+														<div class="start-btn" onclick="start()">START</div>
+																</div>
+												<div class="instructions">
+												<h4>INSTRUCTIONS:</h4>
+												<p><span>W-A-S-D: </span> to navigate camera</p>
+												<p><span>Q: </span> to change materials</p>
+												<p><span>I: </span> to change items</p>
+												<p><span>X: </span> to exit</p>
+
+								</div>
+				</div>
+</div>
+</body>
+<script type="text/javascript" >const canvas = document.querySelector('.canvas');
+	const canvas2 = document.querySelector('.canvas2');
+	const canvas3 = document.querySelector('.canvas3');
+	const canvas4 = document.querySelector('.canvas4');
+	
+	const frontPage = document.querySelector('.front-page-container');
+	const frontOverlay = document.querySelector('.front-overlay');
+	
+	const overLay = document.querySelector('.overlay');
+	const textures = document.querySelector('.texture-cont');
+	const items = document.querySelector('.item-cont');
+	
+	const texture1 = document.querySelector('.text1');
+	const texture2 = document.querySelector('.text2');
+	const texture3 = document.querySelector('.text3');
+	const texture4 = document.querySelector('.text4');
+	const texture5 = document.querySelector('.text5');
+	const texture6 = document.querySelector('.text6');
+	const texture7 = document.querySelector('.text7');
+	const texture8 = document.querySelector('.text8');
+	const texture9 = document.querySelector('.text9');
+	
+	const color1 = getComputedStyle(texture1).getPropertyValue('background-image');
+		const color1Front = "url('sprites/land/land-front.png')";
+		const color1Back = "url('sprites/land/land-back.png')";
+		const color1Left = "url('sprites/land/land-left.png')";
+		const color1Right = "url('sprites/land/land-right.png')";
+		const color1Top = "url('sprites/land/land-top.png')";
+		const color1Bottom = "url('sprites/land/land-bottom.png')";
+	
+	const color2 = getComputedStyle(texture2).getPropertyValue('background-image');
+		const color2Front = "url('sprites/brick/brick-front.png')";
+		const color2Back = "url('sprites/brick/brick-front.png')";
+		const color2Left = "url('sprites/brick/brick-left.png')";
+		const color2Right = "url('sprites/brick/brick-right.png')";
+		const color2Top = "url('sprites/brick/brick-top.png')";
+		const color2Bottom = "url('sprites/brick/brick-bottom.png')";
+	
+	const color3 = getComputedStyle(texture3).getPropertyValue('background-image');
+		const color3Front = "url('sprites/wood/wood-top.png')";
+		const color3Back = "url('sprites/wood/wood-top.png')";
+		const color3Left = "url('sprites/wood/wood-left.png')";
+		const color3Right = "url('sprites/wood/wood-right.png')";
+		const color3Top = "url('sprites/wood/wood-top.png')";
+		const color3Bottom = "url('sprites/wood/wood-bottom.png')";
+	const color4 = getComputedStyle(texture4).getPropertyValue('background-image');
+	
+	const color5 = getComputedStyle(texture5).getPropertyValue('background-image');
+	
+	const color6 = getComputedStyle(texture6).getPropertyValue('background-image');
+	
+	const color7 = getComputedStyle(texture7).getPropertyValue('background-image');
+	
+	const color8 = getComputedStyle(texture8).getPropertyValue('background-image');
+		const color8Front = "url('sprites/brick/red-brick.png')";
+		const color8Back = "url('sprites/brick/red-brick.png')";
+		const color8Left = "url('sprites/brick/red-brick-left.png')";
+		const color8Right = "url('sprites/brick/red-brick-right.png')";
+		const color8Top = "url('sprites/brick/red-brick.png')";
+		const color8Bottom = "url('sprites/brick/red-brick-back.png')";
+	
+	const color9 = getComputedStyle(texture9).getPropertyValue('background-image');
+		const color9Front = "url('sprites/bomb/bomb-front.jpg')";
+		const color9Back = "url('sprites/bomb/bomb-front.jpg')";
+		const color9Left = "url('sprites/bomb/bomb-left.png')";
+		const color9Right = "url('sprites/bomb/bomb-right.png')";
+		const color9Top = "url('sprites/bomb/bomb-back.png')";
+		const color9Bottom = "url('sprites/bomb/bomb.png')";
+	// const color6 = getComputedStyle(texture1).getPropertyValue('background-color');
+	
+	// const cube = document.querySelector('.container');
+	const ground = document.querySelector('.ground');
+	
+	const clouds = (x,z) => {
+	
+		const cloud = document.createElement('div');
+		const frontCloud = document.createElement('div');
+		const backCloud = document.createElement('div');
+		const leftCloud = document.createElement('div');
+		const rightCloud = document.createElement('div');
+		const topCloud = document.createElement('div');
+		const bottomCloud = document.createElement('div');
+	
+		cloud.classList.add('cloud');
+		frontCloud.classList.add('front-cloud');
+		backCloud.classList.add('back-cloud');
+		leftCloud.classList.add('left-cloud');
+		rightCloud.classList.add('right-cloud');
+		topCloud.classList.add('top-cloud');
+		bottomCloud.classList.add('bottom-cloud');
+	
+		cloud.style.left = x + 'px';
+		cloud.style.transform = 'translateZ(' + z + 'px)';
+	
+		cloud.appendChild(frontCloud);
+		cloud.appendChild(backCloud);
+		cloud.appendChild(leftCloud);
+		cloud.appendChild(rightCloud);
+		cloud.appendChild(topCloud);
+		cloud.appendChild(bottomCloud);
+	
+		
+	
+	
+	}
+	
+	for(let i = 0; i <= 100; i++){
+		let a = Math.floor(Math.random() * 100);
+		let b = Math.floor(Math.random() * 100);
+	
+		clouds(a,b);
+		// console.log(a,b);
+	}
+	
+	
+	let changeColor1 = false;
+	let changeColor2 = false;
+	let changeColor3 = false;
+	let changeColor4 = false;
+	let changeColor5 = false;
+	let changeColor6 = false;
+	let changeColor7 = false;
+	let changeColor8 = false;
+	let changeColor9 = false;
+	
+	// console.log(cubeTexture.color1);
+	
+	class Scale{
+		constructor(){
+			this.scale = 50;
+		}
+	}
+	
+	let scale = new Scale();
+	
+	
+	// console.log(canvas.style.transform);
+	
+	let cameraX = -7;
+	let cameraY = 0;
+	let x = 0;
+	let y = 0;
+	let sensitivity = 4;
+	
+	//-------------------- controls... -----------------------------
+	
+	window.addEventListener('keydown', (e) => {
+		// camera controls
+			if(e.key === 's'){
+				cameraX++;
+				canvas.style.transform = 'rotateX(' + cameraX*sensitivity + 'deg)';
+				// console.log(cameraX*sensitivity)
+			}
+			else if(e.key === 'w'){
+				canvas.style.transform = 'rotateX(' + cameraX*sensitivity + 'deg)';
+				cameraX--;
+				// console.log(cameraX*sensitivity);
+			}
+			if(e.key === 'a'){
+				cameraY++;
+				canvas2.style.transform = 'rotateY(' + cameraY*sensitivity + 'deg)';
+			}
+			else if(e.key === 'd'){
+				cameraY--;
+				canvas2.style.transform = 'rotateY(' + cameraY*sensitivity + 'deg)';
+			}
+	
+		// movement controls
+			if(e.key == 'ArrowDown'){
+				y--;
+				canvas3.style.transform = 'translateZ(' + y*sensitivity + 'px)';
+				// console.log(e.key);
+			}
+			if(e.key == 'ArrowUp'){
+				y++;
+				canvas3.style.transform = 'translateZ(' + y*sensitivity + 'px)';
+				// console.log(e.key);
+			}
+			if(e.key == 'ArrowLeft'){
+				x--;
+				canvas4.style.left = x*sensitivity + 'px';
+				// console.log(e.key);
+			}
+			if(e.key === 'ArrowRight'){
+				x++;
+				canvas4.style.left = x*sensitivity + 'px';
+				// console.log(e.key);
+			}
+	});
+	
+	
+	ground.style.top = 0 + 'px';
+	// cube.style.top = (parseInt(ground.style.top) + 100) + 'px';
+	
+	// console.log(cube.style.top);
+	
+	
+	//----------------------- grid system ----------------------------
+	let groundWidth = parseInt(getComputedStyle(ground).getPropertyValue('width'));
+	let groundHeight = parseInt(getComputedStyle(ground).getPropertyValue('height'));
+	
+	let cells = [];
+	let cubeCells = [];
+	let cubes = [];
+	
+	for(let b = 0; b < groundHeight; b += scale.scale){
+		for(let a = 0; a < groundWidth; a += scale.scale){
+			const cell = document.createElement('div');
+	
+			cell.classList.add('cell');
+			cell.style.width = scale.scale + 'px';
+			cell.style.height = scale.scale + 'px';
+	
+			cell.style.left = a + 'px';
+			cell.style.top = b + 'px';
+			ground.appendChild(cell);	
+			cells.push(cell)
+	
+			// if(cell.parentNode.className == 'ground'){
+			// 	cell.style.background = "rgb(14, 49, 5)";
+			// }
+	
+		}
+	}
+	
+	
+	// for(i of cells){
+	// 	// console.log(i);
+	
+	// }
+	
+	function start(){
+		frontPage.style.display = 'none';
+		frontOverlay.style.display = 'none';
+	}
+	
+	let build = true;
+	let destroy = false;
+	let cut = false;
+	
+	const cursor = document.querySelector('.cursor');
+	
+	
+	function changeClolor1(){
+		cursor.style.background = color1;
+		build = true;
+		changeColor1 = true;
+		changeColor2 = false;
+		changeColor3 = false;
+		changeColor4 = false;
+		changeColor5 = false;
+		changeColor6 = false;
+		changeColor7 = false;
+		changeColor8 = false;
+		changeColor9 = false;
+	
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+	
+	
+	}
+	function changeClolor2(){
+		cursor.style.background = color2 + 'no-repeat center center/cover';
+		build = true;
+		changeColor1 = false;
+		changeColor2 = true;
+		changeColor3 = false;
+		changeColor4 = false;
+		changeColor5 = false;
+		changeColor6 = false;
+		changeColor7 = false;
+		changeColor8 = false;
+		changeColor9 = false;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+	}
+	function changeClolor3(){
+		cursor.style.background = color3 + 'no-repeat center center/cover';
+		build = true;
+		changeColor1 = false;
+		changeColor2 = false;
+		changeColor3 = true;
+		changeColor4 = false;
+		changeColor5 = false;
+		changeColor6 = false;
+		changeColor7 = false;
+		changeColor8 = false;
+		changeColor9 = false;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+	}
+	function changeClolor4(){
+		cursor.style.background = color4 + 'no-repeat center center/cover';
+		build = true;
+		changeColor1 = false;
+		changeColor2 = false;
+		changeColor3 = false;
+		changeColor4 = true;
+		changeColor5 = false;
+		changeColor6 = false;
+		changeColor7 = false;
+		changeColor8 = false;
+		changeColor9 = false;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+	}
+	function changeClolor5(){
+		cursor.style.background = color5;
+		build = true;
+		changeColor1 = false
+		changeColor2 = false;
+		changeColor3 = false;
+		changeColor4 = false;
+		changeColor5 = true;
+		changeColor6 = false;
+		changeColor7 = false;
+		changeColor8 = false;
+		changeColor9 = false;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+	}
+	function changeClolor6(){
+		cursor.style.background = color6 + 'no-repeat center center/cover';
+		build = true;
+		changeColor1 = false
+		changeColor2 = false;
+		changeColor3 = false;
+		changeColor4 = false;
+		changeColor5 = false;
+		changeColor6 = true;
+		changeColor7 = false;
+		changeColor8 = false;
+		changeColor9 = false;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+	}
+	function changeClolor7(){
+		cursor.style.background = color7 + 'no-repeat center center/cover';
+		build = true;
+		changeColor1 = false
+		changeColor2 = false;
+		changeColor3 = false;
+		changeColor4 = false;
+		changeColor5 = false;
+		changeColor6 = false;
+		changeColor7 = true;
+		changeColor8 = false;
+		changeColor9 = false;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+	}
+	function changeClolor8(){
+		cursor.style.background = color8 + 'no-repeat center center/cover';
+		build = true;
+		changeColor1 = false
+		changeColor2 = false;
+		changeColor3 = false;
+		changeColor4 = false;
+		changeColor5 = false;
+		changeColor6 = false;
+		changeColor7 = false;
+		changeColor8 = true;
+		changeColor9 = false;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+	}
+	function changeClolor9(){
+		cursor.style.background = color9 + 'no-repeat center center/cover';
+		build = true;
+		changeColor1 = false
+		changeColor2 = false;
+		changeColor3 = false;
+		changeColor4 = false;
+		changeColor5 = false;
+		changeColor6 = false;
+		changeColor7 = false;
+		changeColor8 = false;
+		changeColor9 = true;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+	}
+	// ----------------------------------------  BLOCK CONSTRUCTOR ----------------------------------------
+	
+	
+	class CubeStructure{
+	
+		constructor(transform, x, y){
+	
+			
+			// console.log(selectedCellX, selectedCellY)
+			this.container = document.createElement('div');
+			this.front = document.createElement('div');
+			this.back = document.createElement('div');
+			this.left = document.createElement('div');
+			this.right = document.createElement('div');
+			this.top = document.createElement('div');
+			this.bottom = document.createElement('div');
+	
+	
+			ground.appendChild(this.container);
+	
+			this.container.appendChild(this.front)
+			this.container.appendChild(this.back);
+			this.container.appendChild(this.left);
+			this.container.appendChild(this.right);
+			this.container.appendChild(this.top);
+			this.container.appendChild(this.bottom);
+				
+	
+			this.container.classList.add('container');
+			this.front.classList.add('front');
+				this.front.style.width = scale.scale + 'px';
+				this.front.style.height = scale.scale + 'px';
+				this.front.style.background = color1Front + ' no-repeat center center/cover';
+			
+			this.back.classList.add('back');
+				this.back.style.width = scale.scale + 'px';
+				this.back.style.height = scale.scale + 'px';
+				this.back.style.transform = 'translateZ(' + -scale.scale + 'px)';
+				this.back.style.background = color1Front + ' no-repeat center center/cover'; 
+				
+				
+	
+			this.left.classList.add('left');
+				this.left.style.width = scale.scale + 'px';
+				this.left.style.height = scale.scale + 'px';
+				this.left.style.left = -scale.scale + 'px';
+				this.left.style.background = color1Left + ' no-repeat center center/cover';
+				
+	
+			this.right.classList.add('right');
+				this.right.style.width = scale.scale + 'px';
+				this.right.style.height = scale.scale + 'px';
+				this.right.style.left = scale.scale + 'px';
+				this.right.style.background = color1Right + ' no-repeat center center/cover';
+				
+	
+			this.top.classList.add('top');
+				this.top.style.width = scale.scale + 'px';
+				this.top.style.height = scale.scale + 'px';
+				this.top.style.top = -scale.scale + 'px';
+				this.top.style.background = color1Bottom + ' no-repeat center center/cover';
+				
+	
+			this.bottom.classList.add('bottom');
+				this.bottom.style.width = scale.scale + 'px';
+				this.bottom.style.height = scale.scale + 'px';
+				this.bottom.style.top = scale.scale + 'px';
+				this.bottom.style.background = color1Top + ' no-repeat center center/cover';
+				
+	
+			this.container.style.left = x + 'px';
+			this.container.style.top = y + 'px';
+			this.container.style.transform = transform;
+	
+	
+			if(changeColor1){
+				this.front.style.background = color1Front + ' no-repeat center center/cover';
+				this.back.style.background = color1Front + ' no-repeat center center/cover'; 
+				this.left.style.background = color1Left + ' no-repeat center center/cover';
+				this.right.style.background = color1Right + ' no-repeat center center/cover';
+				this.top.style.background = color1Bottom + ' no-repeat center center/cover';
+				this.bottom.style.background = color1Top + ' no-repeat center center/cover';
+			}
+			if(changeColor2){
+				this.front.style.background = color2Front + ' no-repeat center center/cover';
+				this.back.style.background = color2Front + ' no-repeat center center/cover';
+				this.left.style.background = color2Left + ' no-repeat center center/cover';
+				this.right.style.background = color2Right + ' no-repeat center center/cover';
+				this.top.style.background = color2Top + ' no-repeat center center/cover';
+				this.bottom.style.background = color2Bottom + ' no-repeat center center/cover';
+			}
+			if(changeColor3){
+				this.front.style.background = color3Front + ' no-repeat center center/cover';
+				this.back.style.background = color3Front + ' no-repeat center center/cover';
+				this.left.style.background = color3Left + ' no-repeat center center/cover';
+				this.right.style.background = color3Right + ' no-repeat center center/cover';
+				this.top.style.background = color3Top + ' no-repeat center center/cover';
+				this.bottom.style.background = color3Bottom + ' no-repeat center center/cover';
+			}
+			if(changeColor4){
+				this.front.style.background = color4 + ' no-repeat center center/cover';
+				this.back.style.background = color4 + ' no-repeat center center/cover';
+				this.left.style.background = color4 + ' no-repeat center center/cover';
+				this.right.style.background = color4 + ' no-repeat center center/cover';
+				this.top.style.background = color4 + ' no-repeat center center/cover';
+				this.bottom.style.background = color4 + ' no-repeat center center/cover';
+			}
+			if(changeColor5){
+				this.front.style.background = color5 + ' no-repeat center center/cover';
+				this.back.style.background = color5 + ' no-repeat center center/cover';
+				this.left.style.background = color5 + ' no-repeat center center/cover';
+				this.right.style.background = color5 + ' no-repeat center center/cover';
+				this.top.style.background = color5 + ' no-repeat center center/cover';
+				this.bottom.style.background = color5 + ' no-repeat center center/cover';
+			}
+			if(changeColor6){
+				this.front.style.background = color6 + ' no-repeat center center/cover';
+				this.back.style.background = color6 + ' no-repeat center center/cover';
+				this.left.style.background = color6 + ' no-repeat center center/cover';
+				this.right.style.background = color6 + ' no-repeat center center/cover';
+				this.top.style.background = color6 + ' no-repeat center center/cover';
+				this.bottom.style.background = color6 + ' no-repeat center center/cover';
+			}
+			if(changeColor7){
+				this.front.style.background = color7 + ' no-repeat center center/cover';
+				this.back.style.background = color7 + ' no-repeat center center/cover';
+				this.left.style.background = color7 + ' no-repeat center center/cover';
+				this.right.style.background = color7 + ' no-repeat center center/cover';
+				this.top.style.background = color7 + ' no-repeat center center/cover';
+				this.bottom.style.background = color7 + ' no-repeat center center/cover';
+			}
+			if(changeColor8){
+				this.front.style.background = color8Front + ' no-repeat center center/cover';
+				this.back.style.background = color8Back + ' no-repeat center center/cover';
+				this.left.style.background = color8Left + ' no-repeat center center/cover';
+				this.right.style.background = color8Right + ' no-repeat center center/cover';
+				this.top.style.background = color8Top + ' no-repeat center center/cover';
+				this.bottom.style.background = color8Bottom + ' no-repeat center center/cover';
+			}
+			if(changeColor9){
+				this.front.style.background = color9Front + ' no-repeat center center/cover';
+				this.back.style.background = color9Back + ' no-repeat center center/cover';
+				this.left.style.background = color9Left + ' no-repeat center center/cover';
+				this.right.style.background = color9Right + ' no-repeat center center/cover';
+				this.top.style.background = color9Top + ' no-repeat center center/cover';
+				this.bottom.style.background = color9Bottom + ' no-repeat center center/cover';
+			}
+	
+			// cubeCells.push([front, back, left, right, top, bottom]);
+			this.container.childNodes.forEach((e) => {
+				e.style.transformStyle = 'preserve-3d';
+			});
+			cubes.push(this.container);
+	
+			}
+	
+	}
+	// ------------ textures change ---------------------
+	window.addEventListener('keydown', (e) => {
+		if(e.key == 'q'){
+			overLay.style.display = 'block';
+			textures.style.display = 'flex';
+			items.style.display = 'none';
+	
+			// console.log(overlay.style.display);
+		}
+		else if(e.key == 'x'){
+			overLay.style.display = 'none';
+			textures.style.display = 'none';
+			items.style.display = 'none';
+		}
+	
+		else if(e.key == 'i'){
+			overLay.style.display = 'block';
+			items.style.display = 'flex';
+			textures.style.display = 'none';
+		}
+	});
+	
+	//--------------------------------------------USER CRAFTING-------------------------------------------
+	
+	
+	
+	function building() {
+		build = true;
+		destroy = false;
+		cut = false;
+		// console.log(build, destroy)
+	}
+	
+	function destroying(){
+		cursor.style.background = "url('sprites/items/axe.png') no-repeat center center/cover";
+		build = false;
+		destroy = true;
+		cut = false;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+		items.style.display = 'none';
+		// console.log(build, destroy)
+	}
+	
+	function cutting(){
+		cursor.style.background = "url('sprites/items/sword.png') no-repeat center center/cover";
+		build = false;
+		destroy = false;
+		cut = true;
+		overLay.style.display = 'none';
+		textures.style.display = 'none';
+		items.style.display = 'none';
+	}
+	
+	
+	
+	
+	canvas4.addEventListener('click', (e) => {	
+		
+		let currentStack = e.path[2].style.transform;
+		let stackValue = Number(currentStack.slice(11, currentStack.indexOf('px)')));
+	
+		let stackLeftValue = parseInt(e.path[2].style.left);
+		let stackTopValue = parseInt(e.path[2].style.top);
+	
+		// console.log(stackValue);
+	
+	
+	
+		if(build){
+	
+			if(e.path[1].className == 'ground'){
+				stackValue = scale.scale;
+				let drawGroundCube = new CubeStructure('translateZ(' + stackValue + 'px)', parseInt(e.path[0].style.left), parseInt(e.path[0].style.top));
+			}
+	
+			if(e.path[1].className == 'front'){
+				stackValue += scale.scale;
+				let drawCube = new CubeStructure('translateZ(' + stackValue + 'px)', parseInt(e.path[2].style.left), parseInt(e.path[2].style.top));
+			}
+			if(e.path[1].className == 'back'){
+				stackValue -= scale.scale;
+				let drawCube = new CubeStructure('translateZ(' + stackValue + 'px)', parseInt(e.path[2].style.left), parseInt(e.path[2].style.top));
+			}
+			if(e.path[1].className == 'left'){
+				stackValue = Number(currentStack.slice(11, currentStack.indexOf('px)')));
+				stackLeftValue -= scale.scale;
+				let drawCube = new CubeStructure('translateZ(' + stackValue + 'px)', stackLeftValue , parseInt(e.path[2].style.top));
+			}
+			if(e.path[1].className == 'right'){
+				stackValue = Number(currentStack.slice(11, currentStack.indexOf('px)')));
+				stackLeftValue += scale.scale;
+				let drawCube = new CubeStructure('translateZ(' + stackValue + 'px)', stackLeftValue , parseInt(e.path[2].style.top));
+			}
+			if(e.path[1].className == 'top'){
+				stackValue = Number(currentStack.slice(11, currentStack.indexOf('px)')));
+				stackTopValue -= scale.scale;
+				let drawCube = new CubeStructure('translateZ(' + stackValue + 'px)', parseInt(e.path[2].style.left), stackTopValue)
+			}
+			if(e.path[1].className == 'bottom'){
+				stackValue = Number(currentStack.slice(11, currentStack.indexOf('px)')));
+				stackTopValue += scale.scale;
+				let drawCube = new CubeStructure('translateZ(' + stackValue + 'px)', parseInt(e.path[2].style.left), stackTopValue)
+			}
+		}
+		else if(destroy){
+			if(e.path[2].className == 'container'){
+				e.path[2].style.display = 'none';
+			}
+		}
+		else if(cut){
+			if(e.path[1].className == 'front' 
+				|| e.path[1].className == 'back' 
+				|| e.path[1].className == 'left'
+				|| e.path[1].className == 'right'
+				|| e.path[1].className == 'top'
+				|| e.path[1].className == 'back'
+				|| e.path[1].className == 'bottom'
+				)
+			{
+				e.path[1].style.display = 'none';
+			}
+		}
+		
+	
+	
+	
+	
+	
+		// let drawGroundCube = new CubeStructure('translateZ(50px)', parseInt(e.path[0].style.left), parseInt(e.path[0].style.top));
+		// console.log(e.path);
+		// console.log(e.path[0].style.left, e.path[0].style.top);
+	
+		// console.log(e.path[1].outerh);
+		// console.log(e.path[1], drawGroundCube.front);
+	// let frontCube = e.path[1] == drawGroundCube.front : new CubeStructure()
+	
+		
+		// drawCube();
+	
+	
+		
+		
+		// console.log(cubes);
+		// console.log(cubes);
+	
+		for(cube of cubes){
+	
+			const cubeCell1 = document.createElement('div');
+			const cubeCell2 = document.createElement('div');
+			const cubeCell3 = document.createElement('div');
+			const cubeCell4 = document.createElement('div');
+			const cubeCell5 = document.createElement('div');
+			const cubeCell6 = document.createElement('div');
+	
+			cubeCell1.classList.add('cell');
+			cubeCell1.style.width = scale.scale + 'px';
+			cubeCell1.style.height = scale.scale + 'px';
+	
+			cubeCell2.classList.add('cell');
+			cubeCell2.style.width = scale.scale + 'px';
+			cubeCell2.style.height = scale.scale + 'px';
+	
+			cubeCell3.classList.add('cell');
+			cubeCell3.style.width = scale.scale + 'px';
+			cubeCell3.style.height = scale.scale + 'px';
+	
+			cubeCell4.classList.add('cell');
+			cubeCell4.style.width = scale.scale + 'px';
+			cubeCell4.style.height = scale.scale + 'px';
+	
+			cubeCell5.classList.add('cell');
+			cubeCell5.style.width = scale.scale + 'px';
+			cubeCell5.style.height = scale.scale + 'px';
+	
+			cubeCell6.classList.add('cell');
+			cubeCell6.style.width = scale.scale + 'px';
+			cubeCell6.style.height = scale.scale + 'px';
+	
+			cube.childNodes[0].appendChild(cubeCell1);
+			cube.childNodes[1].appendChild(cubeCell2);
+			cube.childNodes[2].appendChild(cubeCell3);
+			cube.childNodes[3].appendChild(cubeCell4);
+			cube.childNodes[4].appendChild(cubeCell5);
+			cube.childNodes[5].appendChild(cubeCell6);
+			// front.appendChild()
+	
+			// cells.push(cubeCell1, cubeCell2, cubeCell3, cubeCell4, cubeCell5, cubeCell6);
+	
+			// if()
+	
+		}
+	
+		
+	
+	
+	
+	
+	})
+	
+	
+	
+	
+	// ---------------------------------------------------------------------------------------------------------------------------
+	
+	
+	window.addEventListener('mousemove', (e) => {
+		cursor.style.left = (e.x + 5) + 'px';
+		cursor.style.top = (e.y + 5) + 'px';
+	})
+	
+	</script>
+</html>
